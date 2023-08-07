@@ -14,6 +14,7 @@ import {
 } from "./styles";
 
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 const newCycleFormValidationSchema = zod.object ({
     task:zod.string()
@@ -33,7 +34,17 @@ const newCycleFormValidationSchema = zod.object ({
 
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>;
 
+
+interface Cycle {
+    id: string,
+    task: string,
+    minutesAmount: number,
+}
+
 export function Home() {
+    const [cycles, setCycles] = useState<Cycle[]>([]);
+    const [activeCycleId, setActiveCycleId] = useState<string | null>(null);
+    const [amountSecondsPassed, setAmountSecondsPassed] = useState(0);
 
     const { register, handleSubmit, watch, reset, formState } = useForm<NewCycleFormData>({
         resolver: zodResolver(newCycleFormValidationSchema),
@@ -49,11 +60,28 @@ export function Home() {
 
     //Recebendo data => dados como parametro para conseguimos manipula-los 
     function handleCreateNewCycle(data: NewCycleFormData) {
-        console.log(data);
+        const id = String(new Date().getTime());
+        const newCycle: Cycle = {
+            id,
+            task: data.task,
+            minutesAmount: data.minutesAmount
+        }
+        
+        setCycles((cycles) => [...cycles, newCycle]);
+        setActiveCycleId(id);
+
         reset();
     }
 
-    console.log(formState.errors);
+    const activeCycle = cycles.find(cycle => cycle.id === activeCycleId);
+
+    const totalSeconds = activeCycle ? activeCycle.minutesAmount * 60 : 0;
+    const currentSeconds = activeCycle ? totalSeconds - amountSecondsPassed : 0;
+
+    const minutesAmount = Math.floor(currentSeconds / 60);
+    const minutes = String(minutesAmount).padStart(2,'0');
+    const secondsAmount = currentSeconds % 60;
+    const seconds = String(secondsAmount).padStart(2,'0');
 
     return (
         <HomeContainer>
@@ -75,6 +103,7 @@ export function Home() {
                     </datalist>
 
                     <label htmlFor="minutesAmout">durante</label>
+                    
                     <MinuteAmount 
                         type="number" 
                         id="minutesAmount"
@@ -89,11 +118,11 @@ export function Home() {
                     <span>minutos.</span>
                 </FormContainer>
                 <CountdownContainer>
-                    <span>0</span>
-                    <span>0</span>
+                    <span>{minutes[0]}</span>
+                    <span>{minutes[0]}</span>
                     <Separator>:</Separator>
-                    <span>0</span>
-                    <span>0</span>
+                    <span>{seconds[0]}</span>
+                    <span>{seconds[0]}</span>
                 </CountdownContainer>
                 <StartCountdownButton disabled={isSubmitDisabled} type="submit">
                     <Play size={24} weight="fill" />
