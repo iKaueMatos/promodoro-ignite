@@ -68,7 +68,9 @@ export function Home() {
         }
 
         return () => {
-            clearInterval(interval);
+            if (activeCycle || activeCycle == 0) {
+                clearInterval(interval);
+            }
         }
     },[activeCycle]);
 
