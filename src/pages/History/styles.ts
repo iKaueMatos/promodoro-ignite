@@ -46,7 +46,6 @@ export const HistoryList = styled.div `
         }
     }
 
-
     td {
         background-color: ${(props) => props.theme['gray-700']};
         border-top: 4px solid ${(props) => props.theme['gray-800']};
