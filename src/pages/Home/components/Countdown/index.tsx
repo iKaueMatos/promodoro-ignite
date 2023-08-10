@@ -52,4 +52,4 @@ export function Countdown() {
             <span>{seconds[1]}</span>
         </CountdownContainer>
     )
-}n
+}
