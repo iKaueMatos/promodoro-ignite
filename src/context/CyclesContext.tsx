@@ -10,11 +10,12 @@ interface Cycle {
     task: string,
     minutesAmount: number,
     startDate:Date,
-    interruptDate?:Date,
+    interruptedDate?:Date,
     finishedDate?:Date
 }
 
 interface CyclesContextType {
+    cycles: Cycle[];
     activeCycle: Cycle | undefined;
     activeCycleId: string | null;
     amountSecondsPassed: number;
@@ -66,7 +67,6 @@ export function CyclesContextProvider({ children }: CyclesContextProviderProps) 
         setAmountSecondsPassed(0);
         setActiveCycleId(id);
 
-        // reset();
     }
 
     function interruptCurrentCycle() {
@@ -90,7 +90,8 @@ export function CyclesContextProvider({ children }: CyclesContextProviderProps) 
             amountSecondsPassed,
             setSecondsPassed,
             createNewCycle,
-            interruptCurrentCycle
+            interruptCurrentCycle,
+            cycles
         }}
         >
             {children}
