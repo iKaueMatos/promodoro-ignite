@@ -21,7 +21,6 @@ export function History() {
                         </tr>
                     </thead>
                     <tbody>
-
                         {cycles.map((cycle) => {
                             return (
                                 <tr key={cycle.id}>
@@ -39,6 +38,7 @@ export function History() {
                                         {cycle.interruptedDate && (
                                             <Status statusColor="red">Interrompido</Status>
                                         )}
+                                        
                                         {(!cycle.finishedDate && !cycle.interruptedDate ) && (
                                             <Status statusColor="yellow">Em andamento</Status>
                                         )}

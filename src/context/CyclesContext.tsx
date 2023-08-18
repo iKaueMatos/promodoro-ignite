@@ -26,7 +26,6 @@ interface CyclesContextProviderProps {
 export function CyclesContextProvider({ children }: CyclesContextProviderProps) {
     //state e o valor que eta dentro da variavel no seu tempo de execução 
     //action a ação que pode ser executada no tempo de execução
-    
     const initialState = {
         cycles: [],
         activeCycleId: null,
