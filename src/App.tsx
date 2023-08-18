@@ -7,14 +7,14 @@ import { CyclesContextProvider } from "./context/CyclesContext";
 
 export default function App() {
 
-  return (
-      <ThemeProvider theme={defaultTheme}>
-        <BrowserRouter>
-        <CyclesContextProvider>
-          <Router />
-        </CyclesContextProvider>
-        </BrowserRouter>
-        <GlobalStyles/>
-      </ThemeProvider>
-  )
+	return (
+			<ThemeProvider theme={defaultTheme}>
+				<BrowserRouter>
+				<CyclesContextProvider>
+					<Router />
+				</CyclesContextProvider>
+				</BrowserRouter>
+				<GlobalStyles/>
+			</ThemeProvider>
+	)
 }
