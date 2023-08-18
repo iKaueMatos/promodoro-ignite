@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
 
 export const HistoryContainer = styled.main `
-
     flex:1;
     padding:3.5rem;
     flex-direction: column;
@@ -10,13 +9,9 @@ export const HistoryContainer = styled.main `
         font-size:1.5rem;
         color: ${(props) => props.theme['gray-100']};
     }
-
-
 `;
 
-
 export const HistoryList = styled.div `
-
     flex:1;
     overflow: auto;
     margin-top:2rem;
@@ -63,7 +58,6 @@ export const HistoryList = styled.div `
             padding-right:1.5rem;
         }
     }
-
 `;
 
 const STATUS_COLORS = {
@@ -76,9 +70,7 @@ interface StatusProps {
     statusColor: keyof typeof STATUS_COLORS;
 }
 
-
 export const Status = styled.span<StatusProps>`
-
     display: flex;
     align-items: center;
     gap: 1.5rem;
