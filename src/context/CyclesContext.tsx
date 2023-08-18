@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useReducer, useState } from 'react';
+import { ReactNode, createContext, useEffect, useReducer, useState } from 'react';
 import {Cycle, cyclesReducer} from '../reducers/cycles';
 
 interface createCycleDate {
@@ -26,15 +26,33 @@ interface CyclesContextProviderProps {
 export function CyclesContextProvider({ children }: CyclesContextProviderProps) {
     //state e o valor que eta dentro da variavel no seu tempo de execução 
     //action a ação que pode ser executada no tempo de execução
-    const [cyclesState, dispatch] = useReducer(cyclesReducer,{
+    
+    const initialState = {
         cycles: [],
-        activeCycleId:null
+        activeCycleId: null,
+    };
+    
+    const [cyclesState, dispatch] = useReducer(cyclesReducer, initialState, (initialState) => {
+    const storedStateAsJSON = localStorage.getItem('@ignite-Timer:cycles:state V.1.0.0');
+
+    if (storedStateAsJSON) {
+        return JSON.parse(storedStateAsJSON);
+    }
+
+    return initialState;
     });
 
     const [amountSecondsPassed, setAmountSecondsPassed] = useState(0);
     const {cycles, activeCycleId} = cyclesState;
     const activeCycle = cycles.find(cycle => cycle.id === activeCycleId);
     
+    //LocalStorage
+    useEffect(() => {
+        const stateJSON = JSON.stringify(cyclesState);
+
+        localStorage.setItem('@ignite-Timer:cycles:state V.1.0.0', stateJSON);
+    }, [cyclesState]);
+
     function markCurrentCycleAsFinished() {
         //UseReducer
         dispatch({
